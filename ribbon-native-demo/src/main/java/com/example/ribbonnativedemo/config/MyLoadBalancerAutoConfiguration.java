@@ -1,12 +1,10 @@
-package com.example.eurekaclientarticleservice.config;
+package com.example.ribbonnativedemo.config;
 
-import com.example.eurekaclientarticleservice.interceptor.MyLoadBalanced;
-import com.example.eurekaclientarticleservice.interceptor.MyLoadBalancerInterceptor;
+import com.example.ribbonnativedemo.interceptor.MyLoadBalanced;
+import com.example.ribbonnativedemo.interceptor.MyLoadBalancerInterceptor;
 import org.springframework.beans.factory.SmartInitializingSingleton;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
-import org.springframework.cloud.client.loadbalancer.LoadBalancerRequestFactory;
-import org.springframework.cloud.client.loadbalancer.RestTemplateCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.ClientHttpRequestInterceptor;

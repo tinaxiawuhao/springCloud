@@ -1,4 +1,4 @@
-package com.example.eurekaclientarticleservice.interceptor;
+package com.example.ribbonnativedemo.interceptor;
 
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerRequestFactory;

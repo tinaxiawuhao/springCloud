@@ -1,4 +1,4 @@
-package com.example.eurekaclientarticleservice.entity;
+package com.example.ribbonnativedemo.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

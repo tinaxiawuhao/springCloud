@@ -1,4 +1,4 @@
-package com.example.eurekaclientarticleservice.interceptor;
+package com.example.ribbonnativedemo.interceptor;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 

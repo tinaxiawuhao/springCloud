@@ -1,13 +1,13 @@
-package com.example.eurekaclientarticleservice.config;
+package com.example.ribbonnativedemo.config;
 
-import com.example.eurekaclientarticleservice.interceptor.MyLoadBalanced;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import com.example.ribbonnativedemo.interceptor.MyLoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
 public class BeanConfiguration {
+
     @Bean
 //    @LoadBalanced
     @MyLoadBalanced

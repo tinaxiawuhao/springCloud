@@ -1,0 +1,15 @@
+###
+GET http://localhost:8088/call/data/zhangsan
+###
+###
+GET http://localhost:8088/call/data?name=zhangsan
+###
+###
+GET http://localhost:8088/call/dataEntity?name=zhangsan
+###
+###
+GET http://localhost:8088/call/save
+###
+###
+GET http://localhost:8088/choose
+###
