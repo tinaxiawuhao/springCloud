@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>ribbon-native-demo</artifactId>
+    <artifactId>feign-inherit-api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>ribbon-native-demo</name>
+    <name>feign-inherit-api</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
@@ -28,20 +28,10 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
-        <!--除了使用 Ribbon 自带的重试策略，我们还可以通过集成 Spring Retry 来进行重试操作。在 pom.xml 中添加 Spring Retry 的依赖，-->
-        <dependency>
-            <groupId>org.springframework.retry</groupId>
-            <artifactId>spring-retry</artifactId>
-        </dependency>
-        <!--feign-->
+        <!--用于存放 API 接口的定义，增加 Feign 的依赖，-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
-        <!--OkHttp-->
-        <dependency>
-            <groupId>io.github.openfeign</groupId>
-            <artifactId>feign-okhttp</artifactId>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -59,12 +49,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>28.2-jre</version>
-            <scope>compile</scope>
-        </dependency>
     </dependencies>
 
     <!-- Spring Cloud -->
@@ -79,6 +63,7 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
     <build>
         <plugins>
             <plugin>
