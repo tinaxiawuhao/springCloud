@@ -1,0 +1,148 @@
+#server:
+#  port: 2001
+#spring:
+#  application:
+#    name: getaway-demo
+#  cloud:
+#    gateway:
+#      routes:
+#        - id: path_route
+#          uri: lb://user-service
+#          predicates:
+#            - Path=/user-service/**
+#     Query 路由断言工厂接收两个参数，一个必需的参数和一个可选的正则表达式。
+#        - id: query_route
+#          uri: http://c.biancheng.net
+#          predicates:
+#            - Query=foo, ba.
+#     Method 路由断言工厂接收一个参数，即要匹配的 HTTP 方法。
+#        - id: method_route
+#          uri: http://baidu.com
+#          predicates:
+#            - Method=GET
+#     Header 路由断言工厂接收两个参数，分别是请求头名称和正则表达式。
+#      如果请求中带有请求头名为 x-request-id，其值与 \d+ 正则表达式匹配（值为一个或多个数字），则此路由匹配。
+#        - id: header_route
+#          uri: http://example.org
+#          predicates:
+#            - Header=X-Request-Id, \d+
+#     自定义路由断言工厂
+#        - id: customer_route
+#          uri: http://c.biancheng.net
+#          predicates:
+#            - name: CheckAuth
+#              args:
+#                name: zhangsan
+#      1. AddRequestHeader 过滤器工厂
+#        #通过名称我们可以快速明白这个过滤器工厂的作用是添加请求头
+#        - id: add_request_header_route
+#          uri: lb://ribbon-eureka-demo
+#          predicates:
+#            - Method=GET
+#          filters:
+#            - AddRequestHeader=X-Request-Foo, Bar
+##      RemoveRequestHeader 是移除请求头的过滤器工厂，可以在请求转发到后端服务之前进行 Header 的移除操作。
+#        - id: removerequestheader_route
+#          uri: lb://ribbon-eureka-demo
+#          predicates:
+#            - Method=GET
+#          filters:
+#            - RemoveRequestHeader=X-Request-Foo
+#      自定义Spring Cloud Gateway过滤器工厂
+#        - id: customer_route
+#          uri: lb://ribbon-eureka-demo
+#          predicates:
+#            - Method=GET
+#          filters:
+#            - CheckAuth=zhangsan,男
+#      discovery:
+#        locator:
+#          enabled: true
+#          lowerCaseServiceId: true
+
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://yonghuming:123456@localhost:8761/eureka/
+  instance:
+    # 采用IP注册
+    preferIpAddress: true
+  # 定义实例ID格式
+    instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}
+server:
+  port: 8093
+spring:
+  application:
+    name: getaway-demo
+  redis:
+    #Redis数据库索引(默认为0)
+    database: 0
+    #连接超时时间（毫秒） springboot2.0 中该参数的类型为Duration，这里在配置的时候需要指明单位
+#    timeout: 20s
+    host: localhost
+    port: 6379
+    jedis:
+      pool:
+        max-active: 1000  # 连接池最大连接数（使用负值表示没有限制）
+        max-wait: -1ms      # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-idle: 10      # 连接池中的最大空闲连接
+        min-idle: 5       # 连接池中的最小空闲连接
+  cloud:
+    gateway:
+      routes:
+        - id: customer_route
+          uri: lb://ribbon-eureka-demo
+          predicates:
+            - Path=/hello
+          default-filters:
+            # 限流过滤器，使用gateway内置令牌算法
+            - name: RequestRateLimiter
+              args:
+                # 令牌桶每秒填充平均速率,即行等价于允许用户每秒处理多少个请求平均数
+                redis-rate-limiter.replenishRate: 10
+                # 令牌桶的容量，允许在一秒钟内完成的最大请求数
+                redis-rate-limiter.burstCapacity: 20
+                # 用于限流的键的解析器的 Bean 对象的名字。它使用 SpEL 表达式根据#{@beanName}从 Spring 容器中获取 Bean 对象。
+                key-resolver: "#{@userkeyResolver}"
+#    内置了 HystrixGatewayFilterFactory 来实现路由级别的熔断，只需要配置即可实现熔断回退功能。配置方式如下所示
+        - id: user-service
+          uri: lb://ribbon-eureka-demo
+          predicates:
+            - Path=/choose
+          filters:
+            - name: Hystrix
+              args:
+                name: fallbackcmd
+                fallbackUri: forward:/defaultfallback
+#    RetryGatewayFilter 是 Spring Cloud Gateway 对请求重试提供的一个 GatewayFilter Factory。配置方式如下所示。
+        - id: encrypt-service
+          uri: lb://ribbon-eureka-demo
+          predicates:
+           - Path=/data/**
+          filters:
+           - name: Retry
+             args:
+               retries: 3
+               series: SERVER_ERROR
+      discovery:
+        locator:
+          enabled: true
+          lowerCaseServiceId: true
+
+#      配置文件方式配置跨域
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            exposedHeaders:
+              - content-type
+            allowedHeaders:
+              - content-type
+            allowCredentials: true
+            allowedMethods:
+              - GET
+              - OPTIONS
+              - PUT
+              - DELETE
+              - POST
