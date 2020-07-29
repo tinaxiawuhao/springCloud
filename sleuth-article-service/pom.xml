@@ -24,12 +24,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <exclusions>
+            <!--<exclusions>
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-logging</artifactId>
                 </exclusion>
-            </exclusions>
+            </exclusions>-->
         </dependency>
         <!--跟踪服务-->
         <dependency>
@@ -42,12 +42,26 @@
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
 
-        <!-- 输出 Json 格式日志 -->
+        <!--项目集成 Zipkin 发送调用链数据
+        在前面的教程中，我们只是集成了 Spring Cloud Sleuth，然后将跟踪信息输出到日志中。现在，Zipkin 的服务部署好了，需要将链路跟踪的信息发送给 Zipkin 的收集服务。
+        需要在项目中添加依赖，具体代码如下所示。-->
         <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-zipkin</artifactId>
+        </dependency>
+
+        <!--用RabbitMq代替Http发送调用链数据-->
+        <dependency>
+            <groupId>org.springframework.amqp</groupId>
+            <artifactId>spring-rabbit</artifactId>
+        </dependency>
+
+        <!-- 输出 Json 格式日志 -->
+        <!--<dependency>
             <groupId>net.logstash.logback</groupId>
             <artifactId>logstash-logback-encoder</artifactId>
             <version>5.2</version>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

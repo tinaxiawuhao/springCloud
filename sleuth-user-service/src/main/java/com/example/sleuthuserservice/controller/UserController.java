@@ -13,7 +13,7 @@ public class UserController {
     public String hello() {
         logger.info("我是/user/hello");
         try {
-            Thread.sleep(4000);
+            Thread.sleep(400);
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
