@@ -1,3 +1,4 @@
+## 负载均衡算法
 ### 1)BestAvailabl
 ```
 选择一个最小的并发请求的 Server，逐个考察 Server，如果 Server 被标记为错误，则跳过，然后再选择 ActiveRequestCount 中最小的 Server。

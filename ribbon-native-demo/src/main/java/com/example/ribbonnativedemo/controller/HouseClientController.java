@@ -1,6 +1,9 @@
 package com.example.ribbonnativedemo.controller;
 
 import com.example.ribbonnativedemo.entity.HouseInfo;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +18,8 @@ public class HouseClientController {
     @Autowired
     private RestTemplate restTemplate;
 
+    @ApiOperation(value = "FeignClient远程调用")
+    @ApiResponses({ @ApiResponse(code = 200, message = "OK", response = HouseInfo.class) })
     @GetMapping("/call/data")
     public HouseInfo getData(@RequestParam("name") String name) {
         return restTemplate.getForObject( "http://eureka-client-user-service/house/data?name="+ name, HouseInfo.class);
