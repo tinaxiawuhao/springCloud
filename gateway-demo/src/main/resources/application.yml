@@ -55,6 +55,7 @@
 #            - Method=GET
 #          filters:
 #            - CheckAuth=zhangsan,男
+#      默认路由
 #      discovery:
 #        locator:
 #          enabled: true

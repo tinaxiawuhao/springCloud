@@ -1,0 +1,22 @@
+server:
+  port: 8011
+spring:
+  application:
+    # 指定注册到nacos server上的服务名称
+    name: nacos-provider-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+#      config:
+#        # 指定group
+#        group: DEFAULT_GROUP
+#        # 文件后缀，默认为properties
+#        file-extension: properties
+
+#management.endpoints.web.exposure.include：暴露所有的 actuator 端点信息重启 服务，我们就可以在详情页面看到更多的数据。
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

@@ -1,0 +1,10 @@
+# 自定义端口号
+server.port=8100
+# 服务提供者
+spring.application.name=provider-service
+# 注册到nacos注册中心
+spring.cloud.nacos.discovery.server-addr=localhost
+# 运行环境
+spring.profiles.active=test
+
+management.endpoints.web.exposure.include: '*'
